@@ -1,0 +1,137 @@
+//write a script to select and deselect items in listbox
+============================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///D:/MultiListboxHtmlpage.html");
+		Thread.sleep(5000);
+		Select dropdown = new Select(driver.findElement(By.name("multiSelection")));
+		//verify dropdown is single or multi listbox
+		boolean value = dropdown.isMultiple();
+		System.out.println(value);
+		//select 0 to 8 items in listbox
+		for(int i=0;i<=8;i++)
+		{
+			Thread.sleep(5000);
+			dropdown.selectByIndex(i);
+		}
+		//deselect from selection
+		dropdown.deselectByVisibleText("Yellow");
+		Thread.sleep(5000);
+		dropdown.deselectByIndex(0);
+		Thread.sleep(5000);
+		dropdown.deselectAll();
+		Thread.sleep(5000);
+		driver.quit();
+=====================================================================
+//write a script to select items in drop down
+=========================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///D:/MultiListboxHtmlpage.html");
+		Thread.sleep(5000);
+		Select dropdown = new Select(driver.findElement(By.name("multiSelection")));
+		//verify dropdown is single or multi listbox
+		boolean value = dropdown.isMultiple();
+		System.out.println(value);
+		//select 0 to 8 items in listbox
+		for(int i=0;i<=8;i++)
+		{
+			Thread.sleep(5000);
+			dropdown.selectByIndex(i);
+		}
+		//deselect from selection
+		dropdown.deselectByVisibleText("Yellow");
+		Thread.sleep(5000);
+		dropdown.deselectByIndex(0);
+		Thread.sleep(5000);
+		dropdown.deselectAll();
+		Thread.sleep(5000);
+		driver.quit();
+==================================================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///D:/MultiListboxHtmlpage.html");
+		Thread.sleep(5000);
+		Select dropdown = new Select(driver.findElement(By.name("multiSelection")));
+		List<WebElement> all_Items = dropdown.getOptions();
+		System.out.println("No of items are::"+all_Items.size());
+		for (WebElement each : all_Items) {
+			System.out.println(each.getText());
+		}
+driver.quit();
+
+===========================================================================
+
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///D:/MultiListboxHtmlpage.html");
+		Thread.sleep(5000);
+		Select dropdown = new Select(driver.findElement(By.name("multiSelection")));
+		for(int i=0;i<=10;i++)
+		{
+			dropdown.selectByIndex(i);
+		}
+		List<WebElement> All_Selected = dropdown.getAllSelectedOptions();
+		System.out.println(All_Selected.size());
+		for (WebElement each : All_Selected) {
+			System.out.println(each.getText());
+		}
+		driver.quit();
+=====================================================================================
+Handling alerts
+==========================================================
+WebDriver driver = new FirefoxDriver();
+		driver.get("https://mail.rediff.com/cgi-bin/login.cgi");
+		Thread.sleep(5000);
+		//clik login without username and pasword
+		driver.findElement(By.name("proceed")).click();
+		//capture alert text
+		String alert_text = driver.switchTo().alert().getText();
+		System.out.println(alert_text);
+		Thread.sleep(5000);
+		//click ok button in alert
+		driver.switchTo().alert().accept();
+		Thread.sleep(5000);
+		driver.quit();
+=====================================================================================
+Handling alerts
+=====================================================================================
+WebDriver driver = new FirefoxDriver();
+		driver.manage().window().maximize();
+		driver.get("http://primusbank.qedgetech.com/");
+		Thread.sleep(3000);
+		driver.findElement(By.name("txtuId")).sendKeys("Admin");
+		driver.findElement(By.name("txtPword")).sendKeys("Admin");
+		driver.findElement(By.name("login")).click();
+		//click branches button
+		driver.findElement(By.xpath("(//img)[5]")).click();
+		Thread.sleep(3000);
+		//click delete buttomn
+		driver.findElement(By.xpath("(//img)[11]")).click();
+		Thread.sleep(3000);
+		//capture alert text
+		String message_alert = driver.switchTo().alert().getText();
+		System.out.println(message_alert);
+		Thread.sleep(3000);
+		//click on cancel button
+		driver.switchTo().alert().dismiss();
+		Thread.sleep(3000);
+		//click delete buttomn
+		driver.findElement(By.xpath("(//img)[11]")).click();
+		Thread.sleep(3000);
+		//click ok button
+		driver.switchTo().alert().accept();
+		Thread.sleep(3000);
+		//capture alert text
+		String alert_text = driver.switchTo().alert().getText();
+		System.out.println(alert_text);
+		//click ok button
+		driver.switchTo().alert().accept();
+		Thread.sleep(5000);
+		driver.quit();
+
+
+
+
+
+

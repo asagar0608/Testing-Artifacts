@@ -1,0 +1,71 @@
+//write a script to verify status of webelement in a page using condtional methods
+=====================================================================================\
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.facebook.com/r.php");
+		Thread.sleep(4000);
+		//verify firstname name textbox is enabled or disabled
+		WebElement firstname = driver.findElement(By.name("firstname"));
+		boolean is_Enabled = firstname.isEnabled();
+		System.out.println(is_Enabled);
+		//verify surname is displayed or hidden
+		WebElement surname = driver.findElement(By.name("lastname"));
+		boolean is_Displayed = surname.isDisplayed();
+		System.out.println(is_Displayed);
+		//verify male radio button is selected or not
+		WebElement maleradio= driver.findElement(By.xpath("//label[normalize-space()='Male']"));
+		boolean is_Selected = maleradio.isSelected();
+		System.out.println(is_Selected);
+		driver.quit();
+==============================================================================================
+//verify check box is checked or unchecked
+=========================================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://mail.rediff.com/cgi-bin/login.cgi");
+		Thread.sleep(5000);
+		//verify checkbox is checked or unchecked
+		WebElement checkbox = driver.findElement(By.name("remember"));
+		boolean value = checkbox.isSelected();
+		System.out.println(value);
+		//if check box already checked un check it or check it
+		if(value)
+		{
+			checkbox.click();
+		}
+===========================================================================================
+//get collection of radio buttons and print each radio button name
+=========================================================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.spicejet.com/");
+		Thread.sleep(5000);
+		//get collection of radio buttons
+		List<WebElement> all_radios= driver.findElements(By.xpath("//div[@class='css-1dbjc4n r-1awozwy r-1loqt21 r-18u37iz r-15d164r r-1otgn73']"));
+		System.out.println(all_radios.size());
+		for (WebElement each : all_radios) {
+			System.out.println(each.getText());
+		}
+		driver.quit();
+================================================================================================
+//write a script to get collection of check boxes
+==============================================================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		driver.get("https://www.myntra.com/");
+		Thread.sleep(5000);
+		Actions ac = new Actions(driver);
+		ac.moveToElement(driver.findElement(By.xpath("//a[@class='desktop-main'][normalize-space()='Kids']"))).perform();
+		Thread.sleep(3000);
+		ac.moveToElement(driver.findElement(By.xpath("(//a[starts-with(text(),'T-Shirts')])[2]"))).click().perform();
+		Thread.sleep(3000);
+		ac.moveToElement(driver.findElement(By.xpath("//div[@class='categories-more']"))).click().perform();
+		Thread.sleep(3000);
+		List<WebElement> all_Checkboxes = driver.findElements(By.xpath("//label[@class=' common-customCheckbox']"));
+		System.out.println(all_Checkboxes.size());
+		for (WebElement each : all_Checkboxes) {
+			System.out.println(each.getText());
+		}
+		driver.quit();
+		

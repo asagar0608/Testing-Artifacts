@@ -1,0 +1,45 @@
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://jqueryui.com/droppable/");
+		Thread.sleep(5000);
+		Actions ac = new Actions(driver);
+		//get collection of frame in a page
+		List<WebElement> all_Frames = driver.findElements(By.tagName("iframe"));
+		System.out.println(all_Frames.size());
+		//switch to fame
+		driver.switchTo().frame(0);
+		WebElement source =driver.findElement(By.id("draggable"));
+		WebElement dest =driver.findElement(By.id("droppable"));
+		ac.clickAndHold(source).moveToElement(dest).release().build().perform();
+		driver.switchTo().defaultContent();
+		Thread.sleep(5000);
+		ac.moveToElement(driver.findElement(By.linkText("Button"))).click().perform();
+		Thread.sleep(5000);
+		driver.quit();
+=============================================================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://jqueryui.com/droppable/");
+		Thread.sleep(5000);
+		Actions ac = new Actions(driver);
+		//switch to frame
+		driver.switchTo().frame(0);
+		WebElement source =driver.findElement(By.id("draggable"));
+		WebElement dest =driver.findElement(By.id("droppable"));
+		ac.dragAndDrop(source, dest).perform();
+=======================================================================================
+
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://jqueryui.com/droppable/");
+		Thread.sleep(5000);
+		Actions ac = new Actions(driver);
+		//switch to frame
+		driver.switchTo().frame(0);
+		WebElement source =driver.findElement(By.id("draggable"));
+		WebElement dest =driver.findElement(By.id("droppable"));
+		int x =dest.getLocation().getX();
+		int y= dest.getLocation().getY();
+		System.out.println(x+"     "+y);
+		ac.dragAndDropBy(source, x, y).perform();
+

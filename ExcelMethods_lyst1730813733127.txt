@@ -1,0 +1,98 @@
+//write a script to count no of rows and cells
+========================================================
+// read path of excel file
+		FileInputStream fi = new FileInputStream("D:/dummy.xlsx");
+		//get workbook from file
+		XSSFWorkbook wb = new XSSFWorkbook(fi);
+		//get sheet from wb
+		XSSFSheet ws =wb.getSheet("Emp");
+		//get first row from Emp sheet
+		XSSFRow row =ws.getRow(0);
+		//count no of rows in emp sheet
+		int rc =ws.getLastRowNum();
+		//count no of cells in first row
+		int cc =row.getLastCellNum();
+		System.out.println("No of rows::"+rc);
+		System.out.println("No of cells   "+cc);
+		fi.close();
+		wb.close();
+=========================================================================================
+//write a script to print specific row cell data
+=======================================================================================
+// read path of excel file
+		FileInputStream fi = new FileInputStream("D:/dummy.xlsx");
+		//get workbook from file
+		XSSFWorkbook wb = new XSSFWorkbook(fi);
+		//get sheet from wb
+		XSSFSheet ws = wb.getSheetAt(0);
+		//count no of rows in sheet
+		int rc = ws.getLastRowNum();
+		System.out.println("No of rows are::"+rc);
+		//print fifth row first cell data
+		String fname =ws.getRow(5).getCell(0).getStringCellValue();
+		//print ninth row second cell data
+		String mname =ws.getRow(9).getCell(1).getStringCellValue();
+		//print second row third cell data
+		String lname =ws.getRow(1).getCell(2).getStringCellValue();
+		//print 14 row fourth cell data
+		int eid =(int) ws.getRow(14).getCell(3).getNumericCellValue();
+		System.out.println(fname+"     "+mname+"     "+lname+"    "+eid);
+		fi.close();
+		wb.close();
+==================================================================================================
+//write a script to read cell data with alternate method
+===================================================================================================
+//read path of excel
+		FileInputStream fi = new FileInputStream("d:/dummy.xlsx");
+		//get workbook from file
+		XSSFWorkbook wb = new XSSFWorkbook(fi);
+		//get sheet from wb
+		XSSFSheet ws = wb.getSheet("Emp");
+		int rc = ws.getLastRowNum();
+		System.out.println(rc);
+		//get specific row from sheet
+		XSSFRow row =ws.getRow(5);
+		//get each cell from row
+		XSSFCell c1 =row.getCell(0);
+		XSSFCell c2 =row.getCell(1);
+		XSSFCell c3 = row.getCell(2);
+		XSSFCell c4 = row.getCell(3);
+		//print each cell data
+		String fname = c1.getStringCellValue();
+		String mname = c2.getStringCellValue();
+		String lname = c3.getStringCellValue();
+		int eid =(int) c4.getNumericCellValue();
+		System.out.println(fname+"     "+mname+"     "+lname+"    "+eid);
+		fi.close();
+		wb.close();
+=======================================================================================================
+//write a script to read all rows cell data
+=======================================================================================================
+// Read path of excel file
+		FileInputStream fi = new FileInputStream("d:/dummy.xlsx");
+		//get workbook from file
+		XSSFWorkbook wb = new XSSFWorkbook(fi);
+		//get sheet from wb
+		XSSFSheet ws = wb.getSheet("Emp");
+		int rc = ws.getLastRowNum();
+		System.out.println(rc);
+		//iterate all rows
+		for(int i=1;i<=rc;i++)
+		{
+			//print all rows each cell data
+			String fname = ws.getRow(i).getCell(0).getStringCellValue();
+			String mname =ws.getRow(i).getCell(1).getStringCellValue();
+			String lname = ws.getRow(i).getCell(2).getStringCellValue();
+			int eid =(int) ws.getRow(i).getCell(3).getNumericCellValue();
+			System.out.println(fname+"     "+mname+"     "+lname+"    "+eid);
+			//write pass into status cell
+			ws.getRow(i).createCell(4).setCellValue("pass");
+			
+		}
+		fi.close();
+		//creat new file
+		FileOutputStream fo = new FileOutputStream("d:/Results.xlsx");
+		wb.write(fo);
+		fo.close();
+		wb.close();
+		

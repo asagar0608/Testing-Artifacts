@@ -1,0 +1,49 @@
+//Read path of excel
+		FileInputStream fi = new FileInputStream("D:/dummy.xlsx");
+		//get wb from file
+		XSSFWorkbook wb = new XSSFWorkbook(fi);
+		//get sheet from wb
+		XSSFSheet ws = wb.getSheet("Emp");
+		int rc =ws.getLastRowNum();
+		for (int i=1;i<=rc;i++)
+		{
+			if(wb.getSheet("Emp").getRow(i).getCell(3).getCellType()==CellType.NUMERIC)
+			{
+				int celldata =(int) wb.getSheet("Emp").getRow(i).getCell(3).getNumericCellValue();
+				//convert from integer to string
+				String eid =String.valueOf(celldata);
+				System.out.println(eid);
+				//write as fail into status cell
+				ws.getRow(i).createCell(4).setCellValue("Fail");
+			}
+		}
+		fi.close();
+		FileOutputStream fo = new FileOutputStream("D:/Results.xlsx");
+		wb.write(fo);
+		fo.close();
+		wb.close();
+===========================================================================================================
+FileInputStream fi = new FileInputStream("D:/dummy.xlsx");
+		XSSFWorkbook wb = new XSSFWorkbook(fi);
+		XSSFSheet ws = wb.getSheet("Emp");
+		int rc = ws.getLastRowNum();
+		for(int i=1;i<=rc;i++)
+		{
+			//ws.getRow(i).createCell(4).setCellValue("Pass");
+			//ws.getRow(i).createCell(4).setCellValue("Fail");
+			ws.getRow(i).createCell(4).setCellValue("Blocked");
+			XSSFCellStyle style =wb.createCellStyle();
+			XSSFFont font = wb.createFont();
+			//font.setColor(IndexedColors.GREEN.getIndex());
+			//font.setColor(IndexedColors.RED.getIndex());
+			font.setColor(IndexedColors.BLUE.getIndex());
+			font.setBold(true);
+			style.setFont(font);
+			ws.getRow(i).getCell(4).setCellStyle(style);
+		}
+		fi.close();
+		FileOutputStream fo = new FileOutputStream("D:/Results.xlsx");
+		wb.write(fo);
+		fo.close();
+		wb.close();
+

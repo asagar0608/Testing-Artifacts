@@ -1,0 +1,72 @@
+// store login data into two dimension
+		String str[][]= {{"admin1","test1"},{"admin2","test2"},{"admin3","test3"},
+				{"admin4","test4"},{"admin5","test5"}};
+		//print no of rows in array
+		System.out.println(str.length);
+		//print no cells in any row
+		System.out.println(str[0].length);
+		//print fifth row second cell data
+		System.out.println(str[4][1]);
+		//iterate all rows
+		for(int rows=0;rows<str.length;rows++)
+		{
+			//iterate each row cell
+			for(int cells=0;cells<str[rows].length;cells++)
+			{
+				System.out.print(str[rows][cells]+"\t");
+			}
+			System.out.println();
+		}
+		
+==========================================================================
+// store different data type using object array
+		Object x[]= new Object[5];
+		x[0]="Hello";
+		x[1]=200;
+		x[2]=345.345;
+		x[3]='p';
+		x[4]=true;
+		for (Object each : x) {
+			
+			System.out.println(each);
+		}
+=================================================================
+Object str [][]= new Object[5][2];
+		str[0][0]="admin1";
+		str[0][1]=2345;
+		str[1][0]="admin2";
+		str[1][1]=3456;
+		str[2][0]="admin3";
+		str[2][1]=8765;
+		str[3][0]="admin4";
+		str[3][1]=7654;
+		str[4][0]="admin5";
+		str[4][1]=4567;
+		System.out.println(str.length);
+		System.out.println(str[2].length);
+		for(int i=0;i<str.length;i++)
+		{
+			for(int j=0;j<str[i].length;j++)
+			{
+				System.out.print(str[i][j]+"\t");
+			}
+			System.out.println();
+		}
+		
+=====================================================================================
+//store all cars into arraylist collection
+		ArrayList<String> cars = new ArrayList<String>();
+		cars.add("Nexon");
+		cars.add("Altroz");
+		cars.add("Indica");
+		cars.add("Harrier");
+		cars.add("Tata Punch");
+		cars.add("Safari");
+		cars.add("XUV700");
+		cars.add("XUV300");
+		System.out.println(cars.size());
+		System.out.println(cars.get(3));
+		for(int i=0;i<cars.size();i++)
+		{
+			System.out.println(cars.get(i));
+		}

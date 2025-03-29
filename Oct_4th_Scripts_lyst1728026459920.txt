@@ -1,0 +1,83 @@
+//write java script to launch url and print title url and domain name along with length
+================================================================================
+WebDriver driver = new ChromeDriver();
+	driver.manage().window().maximize();
+	//create object for javascriptexecutor
+	JavascriptExecutor js=(JavascriptExecutor)driver;
+	//launch url using java script
+	js.executeScript("window.location='https://amazon.in'");
+	Thread.sleep(5000);
+	//print title and length of title
+	String pagetitle =js.executeScript("return document.title").toString();
+	System.out.println(pagetitle);
+	System.out.println(pagetitle.length());
+	//print url and length of url
+	String strUrl = js.executeScript("return document.URL").toString();
+	System.out.println(strUrl);
+	System.out.println(strUrl.length());
+	//print domain name and lenght of domain
+	String strdomian = js.executeScript("return document.domain").toString();
+	System.out.println(strdomian);
+	System.out.println(strdomian.length());
+	driver.quit();
+==================================================================================
+//write java script to scroll top to bottom and bottom to top and scroll to certain pixels vertically
+============================================================================================================
+WebDriver driver = new FirefoxDriver();
+		driver.manage().window().maximize();
+		JavascriptExecutor js =(JavascriptExecutor)driver;
+		js.executeScript("window.location='https://amazon.in'");
+		Thread.sleep(5000);
+		//scroll top to bottom vertically
+		js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+		Thread.sleep(5000);
+		//scroll bottom to top vertically
+		js.executeScript("window.scrollTo(document.body.scrollHeight,0)");
+		Thread.sleep(5000);
+		//sroll to certain pixel
+		js.executeScript("window.scrollBy(0,1000)");
+		Thread.sleep(8000);
+		driver.quit();
+====================================================================================================
+//write java script to scroll to particualr element
+==================================================================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		JavascriptExecutor js =(JavascriptExecutor)driver;
+		js.executeScript("window.location='https://amazon.in'");
+		Thread.sleep(5000);
+		WebElement element = driver.findElement(By.linkText("Facebook"));
+		//scroll to facebook link
+		js.executeScript("window.scrollIntoView", element);
+		element.click();
+		String pagetitle= js.executeScript("return document.title").toString();
+		System.out.println(pagetitle);
+================================================================================================
+//write a java script to login
+===================================================================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		JavascriptExecutor js =(JavascriptExecutor)driver;
+		js.executeScript("window.location='http://orangehrm.qedgetech.com/'");
+		Thread.sleep(5000);
+		js.executeScript("document.querySelector('#txtUsername').value='Admin45'");
+		Thread.sleep(5000);
+		js.executeScript("document.getElementById('txtPassword').value='Qedge123!@#'");
+		Thread.sleep(5000);
+		js.executeScript("document.querySelector(\"#btnLogin\").click()");
+		Thread.sleep(5000);
+		String Expected ="dashboard";
+		String Actual =js.executeScript("return document.URL").toString();
+		if(Actual.contains(Expected))
+		{
+			System.out.println("Login Success::"+Expected+"      "+Actual);
+		}
+		else
+		{
+			//capture error message
+			String message =js.executeScript("return document.querySelector(\"#spanMessage\").innerHTML").toString();
+			System.out.println(message+"     "+Expected+"      "+Actual);
+		}
+		Thread.sleep(5000);
+		driver.quit();
+

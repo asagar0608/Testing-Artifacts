@@ -1,0 +1,64 @@
+//write a script to get collection of links and prinrt each link text and url of each link
+========================================================================
+	WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		driver.get("http://rediff.com/");
+		Thread.sleep(5000);
+		//get collection of all links in a page
+		List<WebElement> all_links =driver.findElements(By.tagName("a"));
+		System.out.println("No of links are::"+all_links.size());
+		Thread.sleep(5000);
+		for (WebElement each : all_links) {
+			Thread.sleep(500);
+			//print each link text
+			System.out.println(each.getText());
+			//print each link url
+			System.out.println(each.getAttribute("href"));
+			
+		}
+		driver.quit();
+====================================================================
+//write a script to perform navigation methods on google page
+=====================================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		driver.navigate().to("https://google.com");;
+		System.out.println("pagetitle[1]"+driver.getTitle());
+		Thread.sleep(5000);
+		//click gmail link
+		driver.findElement(By.linkText("Gmail")).click();
+		System.out.println("pagetitle[2]"+driver.getTitle());
+		Thread.sleep(5000);
+		//click back button
+		driver.navigate().back();
+		System.out.println("pagetitle[3]"+driver.getTitle());
+		Thread.sleep(5000);
+		//click forward button
+		driver.navigate().forward();
+		System.out.println("pagetitle[4]"+driver.getTitle());
+		Thread.sleep(5000);
+		//reload page
+		driver.navigate().refresh();
+		Thread.sleep(5000);
+		driver.quit();
+//====================================================
+//write a script to get height and width of element using getSizee method
+=================================================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.navigate().to("http://orangehrm.qedgetech.com/");
+		
+		Thread.sleep(5000);
+		//store username into webelement
+		WebElement user = driver.findElement(By.name("txtUsername"));
+		
+		Dimension dim =user.getSize();
+		System.out.println(dim.height+"    "+dim.width);
+		//store login button into weblement
+		WebElement loginbtn = driver.findElement(By.name("Submit"));
+		Dimension dim1 =loginbtn.getSize();
+		System.out.println(dim1.height+"    "+dim1.width);
+		driver.quit();
+		

@@ -1,0 +1,55 @@
+//write a script to perform keyboard methods
+===============================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://google.com");
+		Thread.sleep(5000);
+		//create Object for actions class
+		Actions ac = new Actions(driver);
+		driver.findElement(By.name("q")).sendKeys("Selenium openings ");
+		Thread.sleep(2000);
+		//press down arrow for three time
+		ac.sendKeys(Keys.ARROW_DOWN).perform();
+		Thread.sleep(5000);
+		ac.sendKeys(Keys.ARROW_DOWN).perform();
+		ac.pause(5000);
+		ac.sendKeys(Keys.ARROW_DOWN).perform();
+		ac.pause(5000);
+		ac.sendKeys(Keys.ENTER).perform();
+		Thread.sleep(5000);
+		driver.quit();
+===================================================================
+//write a script to perform mouse and keyboard methods
+===================================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.navigate().to("https://gmail.com");
+		Thread.sleep(5000);
+		//create obejct for actions class
+		Actions ac = new Actions(driver);
+		//mouse hover to create acctoint and link
+		ac.moveToElement(driver.findElement(By.xpath("//span[normalize-space()='Create account']"))).click().perform();
+		Thread.sleep(5000);
+		ac.sendKeys(Keys.ARROW_UP).perform();
+		Thread.sleep(5000);
+		ac.sendKeys(Keys.ARROW_UP).perform();
+		Thread.sleep(5000);
+		ac.sendKeys(Keys.ARROW_UP).perform();
+		Thread.sleep(5000);
+		ac.sendKeys(Keys.ENTER).perform();
+		Thread.sleep(5000);
+		driver.findElement(By.name("firstName")).sendKeys("Akhilesh");
+		driver.findElement(By.name("lastName")).sendKeys("Selenium");
+		ac.moveToElement(driver.findElement(By.xpath("//span[contains(text(),'Next')]"))).click().perform();
+		Thread.sleep(5000);
+		//get collection of items in listbox
+		Select monthlist = new Select(driver.findElement(By.xpath("//select[@id='month']")));
+		List<WebElement> all_Items = monthlist.getOptions();
+		int items=all_Items.size()-1;
+		System.out.println("No of items are::"+items);
+		Thread.sleep(5000);
+		for (WebElement each : all_Items) {
+			System.out.println(each.getText());
+		}
+		Thread.sleep(5000);
+		driver.quit();

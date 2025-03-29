@@ -1,0 +1,87 @@
+//write a script to select items in listboxes
+==========================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://facebook.com");
+		//click new account link
+		driver.findElement(By.linkText("Create new account")).click();
+		Thread.sleep(5000);
+		//store day,month and year listbox into select class
+		Select daylist = new Select(driver.findElement(By.id("day")));
+		Select monthlist = new Select(driver.findElement(By.id("month")));
+		Select yearlist = new Select(driver.findElement(By.id("year")));
+		//verify daylistbox is single or multi listbox
+		boolean value = daylist.isMultiple();
+		System.out.println(value);
+		//select items in three listboxes
+		daylist.selectByVisibleText("1");
+		Thread.sleep(5000);
+		monthlist.selectByVisibleText("Aug");
+		Thread.sleep(5000);
+		yearlist.selectByVisibleText("1987");
+		Thread.sleep(5000);
+		//select item using index
+		daylist.selectByIndex(20);
+		System.out.println(daylist.getFirstSelectedOption().getText());
+		Thread.sleep(5000);
+		monthlist.selectByIndex(7);
+		System.out.println(monthlist.getFirstSelectedOption().getText());
+		Thread.sleep(5000);
+		yearlist.selectByIndex(50);
+		System.out.println(yearlist.getFirstSelectedOption().getText());
+		Thread.sleep(5000);
+		driver.quit();
+===========================================================================
+//write a script to get collection of items in listbox
+========================================================================
+	WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		driver.navigate().to("https://www.amazon.in/");
+		Thread.sleep(5000);
+		//store listbox into select class
+		Select listbox = new Select(driver.findElement(By.id("searchDropdownBox")));
+		//get collection of items in listbox
+		List<WebElement> all_items =listbox.getOptions();
+		System.out.println("No of items are::"+all_items.size());
+		Thread.sleep(5000);
+		//print each items name
+		for (WebElement each : all_items) {
+			System.out.println(each.getText());
+		}
+		Thread.sleep(5000);
+		driver.quit();
+=============================================================================
+String Expected_Item ="baby";
+		//String Expected_Item ="Hyderabad";
+		boolean Item_Exist =false;
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		driver.navigate().to("https://www.amazon.in/");
+		Thread.sleep(5000);
+		Select listbox = new Select(driver.findElement(By.id("searchDropdownBox")));
+		List<WebElement> all_items = listbox.getOptions();
+		System.out.println("No of items are::"+all_items.size());
+		Thread.sleep(5000);
+		for (WebElement each : all_items) {
+			//get each item
+			String Actual_items = each.getText();
+			Thread.sleep(500);
+			System.out.println(Actual_items);
+			if(Actual_items.equalsIgnoreCase(Expected_Item))
+			{
+				Item_Exist=true;
+				break;
+			}
+		}
+		if(Item_Exist)
+		{
+			System.out.println(Expected_Item+"    "+"Item Exist In Listbox");	
+		}
+		else
+		{
+			System.out.println(Expected_Item+"    "+"Item Does Not Exist In Listbox");	
+		}
+		driver.quit();
+

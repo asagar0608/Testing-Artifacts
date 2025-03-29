@@ -1,0 +1,73 @@
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://gmail.com");
+		Thread.sleep(5000);
+		//get parent id
+		String parent = driver.getWindowHandle();
+		System.out.println(parent);
+		//click three link to open multiple tabs
+		driver.findElement(By.linkText("Help")).click();
+		driver.findElement(By.linkText("Privacy")).click();
+		driver.findElement(By.linkText("Terms")).click();
+		//get collection of all windows ids
+		Set<String> wins = driver.getWindowHandles();
+		System.out.println(wins);
+		for (String each : wins) {
+			if(!parent.equals(each))
+			{
+				Thread.sleep(2000);
+				driver.switchTo().window(each);
+				System.out.println(driver.getTitle());
+				Thread.sleep(5000);
+				driver.close();
+			}
+			
+		}
+		//switch to parent
+		driver.switchTo().window(parent);
+		Thread.sleep(5000);
+		driver.findElement(By.id("identifierId")).sendKeys("pranga2010@gmail.com");
+		Thread.sleep(5000);
+		driver.quit();
+
+===========================================================================================
+WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://facebook.com");
+		driver.findElement(By.linkText("Create new account")).click();
+		String parent = driver.getWindowHandle();
+		System.out.println(parent);
+		Thread.sleep(2000);
+		//click three links to open in new tab
+		driver.findElement(By.xpath("(//a[contains(text(),'Terms')])[2]")).click();
+		driver.findElement(By.xpath("//a[contains(@id,'privacy-link')]")).click();
+		driver.findElement(By.linkText("Cookies Policy")).click();
+		Set<String> wins = driver.getWindowHandles();
+		System.out.println(wins);
+		Iterator<String> str=wins.iterator();
+		while (str.hasNext()) {
+			String child = (String) str.next();
+			if(!parent.equals(child))
+			{
+				driver.switchTo().window(child);
+				System.out.println(driver.getTitle());
+				Thread.sleep(5000);
+				driver.close();
+			}
+		}
+		//switch to parent
+		driver.switchTo().window(parent);
+		Thread.sleep(5000);
+		Select yearlist = new Select(driver.findElement(By.id("year")));
+		//get collection of items in year listbox
+		List<WebElement> all_Items = yearlist.getOptions();
+		System.out.println(all_Items.size());
+		//iterate all items in listbox
+		for (WebElement each : all_Items) {
+			//pint each item name
+			System.out.println(each.getText());
+		}
+		Thread.sleep(5000);
+		driver.quit();
+
+
