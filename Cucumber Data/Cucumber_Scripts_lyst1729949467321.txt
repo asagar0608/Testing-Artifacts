@@ -1,0 +1,197 @@
+<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>4.18.0</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+//adding dependencies  into POM.xml
+==================================================================
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-java</artifactId>
+    <version>3.0.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-junit</artifactId>
+    <version>3.0.1</version>
+    <scope>test</scope>
+</dependency>
+<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-testng</artifactId>
+    <version>3.0.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/junit/junit -->
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.13.2</version>
+    <scope>test</scope>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+<dependency>
+    <groupId>org.testng</groupId>
+    <artifactId>testng</artifactId>
+    <version>6.14.3</version>
+    <scope>test</scope>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+<dependency>
+    <groupId>com.aventstack</groupId>
+    <artifactId>extentreports</artifactId>
+    <version>5.0.9</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.vimalselvam/cucumber-extentsreport -->
+<dependency>
+    <groupId>com.vimalselvam</groupId>
+    <artifactId>cucumber-extentsreport</artifactId>
+    <version>3.1.1</version>
+</dependency>
+===============================================================================
+//creating feature file
+============================================================================
+@tag
+Feature:
+As Admin users i want login to orange hrm
+@Positivedata
+Scenario Outline:
+I want to test login with valid data
+Given i open browser with url "http://orangehrm.qedgetech.com"
+Then i should see login page
+When i enter username as "<username>"
+And i enter password as"<password>"
+And i click login button
+Then Login should be success
+When i close browser
+Examples:
+|username|password|
+|Admin|Qedge123!@#|
+|Admin|Qedge123!@#|
+|Admin|Qedge123!@#|
+|Admin|Qedge123!@#|
+|Admin|Qedge123!@#|
+|Admin|Qedge123!@#|
+@Negativedata
+Scenario Outline:
+I want to test login with invalid data
+Given i open browser with url "http://orangehrm.qedgetech.com"
+Then i should see login page
+When i enter username as "<username>"
+And i enter password as"<password>"
+And i click login button
+Then i should see error message"<Errormessage>"
+When i close browser
+Examples:
+|username|password|Errormessage|
+|Admin|xyz|Invalid credentials|
+|Admin||Password cannot be empty|
+|Admin|Qedge|Invalid credentials|
+
+
+
+
+
+==================================================================================================
+//preapring step defination
+==================================================================================================
+package stepDefination;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
+public class AdminLoginSteps {
+	WebDriver driver;
+	@Given("i open browser with url {string}")
+	public void i_open_browser_with_url(String url) {
+	   driver = new FirefoxDriver();
+	   driver.get(url);
+	   driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	}
+
+	@Then("i should see login page")
+	public void i_should_see_login_page() {
+	   if(driver.findElement(By.name("Submit")).isDisplayed())
+	   {
+		   System.out.println("Login Page Displayed");
+	   }
+	}
+
+	@When("i enter username as {string}")
+	public void i_enter_username_as(String user) {
+	driver.findElement(By.name("txtUsername")).sendKeys(user);	
+	}
+
+	@When("i enter password as{string}")
+	public void i_enter_password_as(String pass) {
+		driver.findElement(By.name("txtPassword")).sendKeys(pass);	
+	}
+
+	@When("i click login button")
+	public void i_click_login_button() throws Throwable {
+	   driver.findElement(By.name("Submit")).click();
+	   Thread.sleep(4000);
+	}
+
+	@Then("Login should be success")
+	public void login_should_be_success() {
+	    String Expected ="dashboard";
+	    String Actual = driver.getCurrentUrl();
+	    if(Actual.contains(Expected))
+	    {
+	    	System.out.println("Login Success::"+Expected+"    "+Actual);
+	    }
+	    else
+	    {
+	    	System.out.println("Login Fail::"+Expected+"    "+Actual);
+	    }
+	}
+
+	@When("i close browser")
+	public void i_close_browser() {
+		driver.quit();
+	    
+	}
+
+	@Then("i should see error message{string}")
+	public void i_should_see_error_message(String error) {
+		String Errormessage=driver.findElement(By.id("spanMessage")).getText();
+		System.out.println(Errormessage);
+	    
+	}
+
+
+}
+============================================================================================================
+//preparing Runner class
+==========================================================================================================
+package testRunner;
+
+import org.junit.runner.RunWith;
+
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
+import cucumber.api.testng.AbstractTestNGCucumberTests;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(features = {"./FeatureFiles/AdminLogin.feature"},monochrome = true,
+glue = {"stepDefination"},tags = ("@Positivedata,@Negativedata"),
+plugin= {"pretty","html:target/report/cucumber",
+		"json:target/report/cucumber.json",
+		"junit:target/report/cucumber.xml",
+		})
+public class Runner extends AbstractTestNGCucumberTests {
+
+}
+

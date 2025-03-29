@@ -1,0 +1,385 @@
+preparing Property file
+===========================================================
+Browser = chrome
+Url = http://webapp.qedgetech.com/
+
+
+================================================================
+Preparing FeatureFile
+=================================================================
+@Tag
+Feature:
+As Admin user want to verify customer and supplier modules
+@Supplier
+Scenario Outline:
+As Admin user validate supplier
+Given Users launch Browser
+When user launch Url
+When Wait for username with "xpath" and "//input[@id='username']" and "10"
+When Enter user name with "name" and "username" and "admin"
+When Enter password  with "xpath" and "//input[@id='password']" and "master"
+When Click login button with "id" and "btnsubmit"
+When Wait for logout link with "xpath" and "(//a[starts-with(text(),' Logout')])[2]" and "10"
+Then Validate Title with "Dashboard « Stock Accounting"
+When Wait for supplier link with "xpath" and "(//a[contains(text(),'Suppliers')])[2]" and "10"
+When Click Supplier link with "xpath" and "(//a[contains(text(),'Suppliers')])[2]"
+When Wait for Add icon with "xpath" and "(//span[@data-caption='Add'])[1]" and "10"
+When click Add Icon "xpath" and "(//span[@data-caption='Add'])[1]"
+When Wait for supplier number with "name" and "x_Supplier_Number" and "10"
+When Capture Supplier number  with "name" and "x_Supplier_Number"
+When Enter in "<suppliername>" with "name" and "x_Supplier_Name"
+When Enter in "<Address>" with "name" and "x_Address"
+When Enter in "<City>" with "name" and "x_City"
+When Enter in "<Country>" with "name" and "x_Country"
+When Enter in "<Contactperson>" with "name" and "x_Contact_Person"
+When Enter in "<Phonenumber>" with "name" and "x_Phone_Number"
+When Enter in "<Email>" with "name" and "x__Email"
+When Enter in "<mobilenumber>" with "name" and "x_Mobile_Number"
+When Enter in "<Notes>" with "name" and "x_Notes"
+When Click Add button with "id" and "btnAction"
+When Wait for Confirm Ok button with "xpath" and "//button[normalize-space()='OK!']" and "10"
+When Click Confirm Ok with "xpath" and "//button[normalize-space()='OK!']"
+When Wait for Alert Ok button with "xpath" and "(//button[starts-with(text(),'OK')])[6]" and "10"
+When Click Alert ok button with "xpath" and "(//button[starts-with(text(),'OK')])[6]"
+Then Validate Supplier number
+When close browser
+Examples:
+|suppliername|Address|City|Country|Contactperson|Phonenumber|Email|mobilenumber|Notes|
+|Akhilesh1|Ameerpet13|Hyderabad1|India|Qedge1|2145698745|Test@gmail.com|5478954789|Iam new Supplier|
+|Akhilesh14|Ameerpet15|Hyderabad1|India|Qedge1|2145698745|Test@gmail.com|5478954789|Iam new Supplier|
+|Akhilesh16|Ameerpet41|Hyderabad1|India|Qedge1|2145698745|Test@gmail.com|5478954789|Iam new Supplier|
+|Akhilesh17|Ameerpet111|Hyderabad1|India|Qedge1|2145698745|Test@gmail.com|5478954789|Iam new Supplier|
+|Akhilesh12|Ameerpet100|Hyderabad1|India|Qedge1|2145698745|Test@gmail.com|5478954789|Iam new Supplier|
+@Customer
+Scenario Outline:
+Validate Customer with multiple data
+Given Users launch Browser
+When user launch Url
+When Wait for username with "xpath" and "//input[@id='username']" and "10"
+When Enter user name with "name" and "username" and "admin"
+When Enter password  with "xpath" and "//input[@id='password']" and "master"
+When Click login button with "id" and "btnsubmit"
+When Wait for logout link with "xpath" and "(//a[starts-with(text(),' Logout')])[2]" and "10"
+Then Validate Title with "Dashboard « Stock Accounting"
+When Wait for Customer link with "xpath" and "(//a[starts-with(text(),'Customers')])[2]" and "10"
+When Click Customer link with "xpath" and "(//a[starts-with(text(),'Customers')])[2]"
+When Wait for Add icon with "xpath" and "(//span[@data-caption='Add'])[1]" and "10"
+When click Add Icon "xpath" and "(//span[@data-caption='Add'])[1]"
+When Wait for Customer number with "name" and "x_Customer_Number" and "10"
+When Capture Customer number  with "name" and "x_Customer_Number"
+When Enter in "<Customername>" with "name" and "x_Customer_Name"
+When Enter in "<Address>" with "name" and "x_Address"
+When Enter in "<City>" with "name" and "x_City"
+When Enter in "<Country>" with "name" and "x_Country"
+When Enter in "<Contactperson>" with "name" and "x_Contact_Person"
+When Enter in "<Phonenumber>" with "name" and "x_Phone_Number"
+When Enter in "<Email>" with "name" and "x__Email"
+When Enter in "<mobilenumber>" with "name" and "x_Mobile_Number"
+When Enter in "<Notes>" with "name" and "x_Notes"
+When Click Add button with "id" and "btnAction"
+When Wait for Confirm Ok button with "xpath" and "//button[normalize-space()='OK!']" and "10"
+When Click Confirm Ok with "xpath" and "//button[normalize-space()='OK!']"
+When Wait for Alert Ok button with "xpath" and "(//button[starts-with(text(),'OK')])[6]" and "10"
+When Click Alert ok button with "xpath" and "(//button[starts-with(text(),'OK')])[6]"
+Then Validate customer number
+When close browser
+Examples:
+|Customername|Address|City|Country|Contactperson|Phonenumber|Email|mobilenumber|Notes|
+|Ramuandranga13|Kukatpalli51|Ameerpet15|India|QedgeTech1|2456987456|ranga@gmail.com|7896541236|iam new Cuatomer1|
+|Ramuandranga14|Kukatpalli41|Ameerpet17|India|QedgeTech1|2456987456|ranga@gmail.com|7896541236|iam new Cuatomer1|
+|Ramuandranga15|Kukatpalli51|Ameerpet51|India|QedgeTech1|2456987456|ranga@gmail.com|7896541236|iam new Cuatomer1|
+|Ramuandranga14|Kukatpalli61|Ameerpet71|India|QedgeTech1|2456987456|ranga@gmail.com|7896541236|iam new Cuatomer1|
+|Ramuandranga112|Kukatpalli231|Ameerpet41|India|QedgeTech1|2456987456|ranga@gmail.com|7896541236|iam new Cuatomer1|
+====================================================================
+Preparing Function library
+==================================================================
+package commonFunctions;
+
+import java.io.FileInputStream;
+import java.time.Duration;
+import java.util.Properties;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.Reporter;
+
+public class FunctionLibrary {
+public static Properties conpro;
+public static WebDriver driver;
+//method for launching browser
+public static WebDriver startBrowser()throws Throwable
+{
+	conpro = new Properties();
+	//load property file
+	conpro.load(new FileInputStream("./PropertyFiles/Environment.properties"));
+	if(conpro.getProperty("Browser").equalsIgnoreCase("chrome"))
+	{
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+	}
+	else if(conpro.getProperty("Browser").equalsIgnoreCase("firefox"))
+	{
+		driver = new FirefoxDriver();
+	}
+	else
+	{
+		Reporter.log("Browser Value is Not Matching",true);
+	}
+	return driver;
+	
+}
+//method for launching url
+public static void openUrl()
+{
+	driver.get(conpro.getProperty("Url"));
+}
+//method for wait for any webelement
+public static void waitForElement(String LocatorType,String LocatorValue,String Mywait)
+{
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Integer.parseInt(Mywait)));
+if(LocatorType.equalsIgnoreCase("xpath"))
+{
+	//wait until element is visible
+	wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(LocatorValue)));
+}
+if(LocatorType.equalsIgnoreCase("name"))
+{
+	//wait until element is visible
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(LocatorValue)));
+}
+if(LocatorType.equalsIgnoreCase("id"))
+{
+	//wait until element is visible
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(LocatorValue)));
+}
+}
+//method for buttons,links,radiobutton,checkboxes and images
+public static void clickAction(String LocatorType,String LocatorValue)
+{
+	if(LocatorType.equalsIgnoreCase("xpath"))
+	{
+		driver.findElement(By.xpath(LocatorValue)).click();
+	}
+	if(LocatorType.equalsIgnoreCase("name"))
+	{
+		driver.findElement(By.name(LocatorValue)).click();
+	}
+	if(LocatorType.equalsIgnoreCase("id"))
+	{
+		driver.findElement(By.id(LocatorValue)).sendKeys(Keys.ENTER);
+	}
+}
+//method for any textbox
+public static void typeAction(String LocatorType,String LocatorValue,String TestData)
+{
+	if(LocatorType.equalsIgnoreCase("xpath"))
+	{
+		driver.findElement(By.xpath(LocatorValue)).clear();
+		driver.findElement(By.xpath(LocatorValue)).sendKeys(TestData);
+	}
+	if(LocatorType.equalsIgnoreCase("name"))
+	{
+		driver.findElement(By.name(LocatorValue)).clear();
+		driver.findElement(By.name(LocatorValue)).sendKeys(TestData);
+	}
+	if(LocatorType.equalsIgnoreCase("id"))
+	{
+		driver.findElement(By.id(LocatorValue)).clear();
+		driver.findElement(By.id(LocatorValue)).sendKeys(TestData);
+	}
+}
+//method for validate title
+public static void validateTitle(String Expected_Title)
+{
+	String Actual_Title = driver.getTitle();
+	try {
+		Assert.assertEquals(Actual_Title, Expected_Title, "Title is Not Matching");
+	} catch (AssertionError e) {
+		System.out.println(e.getMessage());
+	}
+}
+//method close browser
+public static void closeBrowser()
+{
+	driver.quit();
+}
+}
+==================================================================
+preparing step Defination class
+================================================================
+package stepDefination;
+
+import org.openqa.selenium.WebDriver;
+
+import commonFunctions.FunctionLibrary;
+import cucumber.api.PendingException;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
+public class StepDefinations {
+	WebDriver driver;
+	@Given("Users launch Browser")
+	public void users_launch_Browser() throws Throwable {
+	   driver = FunctionLibrary.startBrowser();
+	}
+
+	@When("user launch Url")
+	public void user_launch_Url() {
+	    FunctionLibrary.openUrl();
+	}
+
+	@When("Wait for username with {string} and {string} and {string}")
+	public void wait_for_username_with_and_and(String Ltype, String Lvalue, String waittime) {
+	    FunctionLibrary.waitForElement(Ltype, Lvalue, waittime);
+	}
+
+	@When("Enter user name with {string} and {string} and {string}")
+	public void enter_user_name_with_and_and(String LType, String Lvalue, String TestData) {
+	    FunctionLibrary.typeAction(LType, Lvalue, TestData);
+	}
+
+	@When("Enter password  with {string} and {string} and {string}")
+	public void enter_password_with_and_and(String LType, String Lvalue, String TestData) {
+	    FunctionLibrary.typeAction(LType, Lvalue, TestData);
+	}
+
+	@When("Click login button with {string} and {string}")
+	public void click_login_button_with_and(String Ltype, String Lvalue) {
+	    FunctionLibrary.clickAction(Ltype, Lvalue);
+	}
+
+	@When("Wait for logout link with {string} and {string} and {string}")
+	public void wait_for_logout_link_with_and_and(String Ltype, String Lvalue, String waittime) {
+	    FunctionLibrary.waitForElement(Ltype, Lvalue, waittime);
+	}
+
+	@Then("Validate Title with {string}")
+	public void validate_Title_with(String Expected_title) {
+	    FunctionLibrary.validateTitle(Expected_title);
+	}
+
+	@When("Wait for supplier link with {string} and {string} and {string}")
+	public void wait_for_supplier_link_with_and_and(String Ltype, String Lvalue, String waittime) {
+	    FunctionLibrary.waitForElement(Ltype, Lvalue, waittime);
+	}
+
+	@When("Click Supplier link with {string} and {string}")
+	public void click_Supplier_link_with_and(String Ltype, String Lvalue) {
+	    FunctionLibrary.clickAction(Ltype, Lvalue);
+	}
+
+	@When("Wait for Add icon with {string} and {string} and {string}")
+	public void wait_for_Add_icon_with_and_and(String Ltype, String Lvalue, String waittime) {
+	    FunctionLibrary.waitForElement(Ltype, Lvalue, waittime);
+	}
+
+	@When("click Add Icon {string} and {string}")
+	public void click_Add_Icon_and(String Ltype, String Lvalue) {
+	   FunctionLibrary.clickAction(Ltype, Lvalue);
+	}
+
+	@When("Wait for supplier number with {string} and {string} and {string}")
+	public void wait_for_supplier_number_with_and_and(String Ltype, String Lvalue, String waittime) {
+	    FunctionLibrary.waitForElement(Ltype, Lvalue, waittime);
+	}
+
+	@When("Capture Supplier number  with {string} and {string}")
+	public void capture_Supplier_number_with_and(String string, String string2) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@When("Enter in {string} with {string} and {string}")
+	public void enter_in_with_and(String TestData, String Ltype, String Lvalue) {
+	    FunctionLibrary.typeAction(Ltype, Lvalue, TestData);
+	}
+
+	@When("Click Add button with {string} and {string}")
+	public void click_Add_button_with_and(String Ltype, String Lvalue) {
+	   FunctionLibrary.clickAction(Ltype, Lvalue);
+	}
+
+	@When("Wait for Confirm Ok button with {string} and {string} and {string}")
+	public void wait_for_Confirm_Ok_button_with_and_and(String Ltype, String Lvalue, String waittime) {
+	    FunctionLibrary.waitForElement(Ltype, Lvalue, waittime);
+	}
+
+	@When("Click Confirm Ok with {string} and {string}")
+	public void click_Confirm_Ok_with_and(String Ltype, String Lvalue) {
+	    FunctionLibrary.clickAction(Ltype, Lvalue);
+	}
+
+	@When("Wait for Alert Ok button with {string} and {string} and {string}")
+	public void wait_for_Alert_Ok_button_with_and_and(String Ltype, String Lvalue, String waittime) {
+	   FunctionLibrary.waitForElement(Ltype, Lvalue, waittime); 
+	}
+
+	@When("Click Alert ok button with {string} and {string}")
+	public void click_Alert_ok_button_with_and(String Ltype, String Lvalue) {
+	   FunctionLibrary.clickAction(Ltype, Lvalue);
+	}
+
+	@Then("Validate Supplier number")
+	public void validate_Supplier_number() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@When("close browser")
+	public void close_browser() {
+	    FunctionLibrary.closeBrowser();
+	}
+
+	@When("Wait for Customer link with {string} and {string} and {string}")
+	public void wait_for_Customer_link_with_and_and(String Ltype, String Lvalue, String waittime) {
+	   FunctionLibrary.waitForElement(Ltype, Lvalue, waittime);
+	}
+
+	@When("Click Customer link with {string} and {string}")
+	public void click_Customer_link_with_and(String Ltype, String Lvalue) {
+	   FunctionLibrary.clickAction(Ltype, Lvalue);
+	}
+
+	@When("Wait for Customer number with {string} and {string} and {string}")
+	public void wait_for_Customer_number_with_and_and(String Ltype, String Lvalue, String waittime) {
+	   FunctionLibrary.waitForElement(Ltype, Lvalue, waittime); 
+	}
+
+	@When("Capture Customer number  with {string} and {string}")
+	public void capture_Customer_number_with_and(String string, String string2) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@Then("Validate customer number")
+	public void validate_customer_number() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+
+}
+
+===================================================================
+preparing AppTest Class
+==================================================================
+package testRunner;
+
+import org.junit.runner.RunWith;
+
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(features = {"FeatureFiles"},monochrome = true)
+public class AppTest {
+
+}
+

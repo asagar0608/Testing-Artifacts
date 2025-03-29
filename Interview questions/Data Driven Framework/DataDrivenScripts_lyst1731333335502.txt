@@ -1,0 +1,167 @@
+package applicationLayer;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class AdminLogin {
+//define Repository
+	@FindBy(name="txtUsername")
+	WebElement Objuser;
+	@FindBy(xpath = "//input[@id='txtPassword']")
+	WebElement Objpass;
+	@FindBy(id="btnLogin")
+	WebElement ObjLogin;
+	//write method for  login
+	public void login(String user,String pass)
+	{
+		Objuser.sendKeys(user);
+		Objpass.sendKeys(pass);
+		ObjLogin.click();
+	}
+	
+}
+=============================================================================
+package applicationLayer;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.testng.Reporter;
+
+public class AddEmployee {
+//define repository
+	@FindBy(xpath = "//b[normalize-space()='PIM']")
+	WebElement clickPim;
+	@FindBy(xpath = "//input[@id='btnAdd']")
+	WebElement clickAdd;
+	@FindBy(xpath = "//input[@id='firstName']")
+	WebElement FirstName;
+	@FindBy(xpath = "//input[@id='middleName']")
+	WebElement MiddleName;
+	@FindBy(xpath = "//input[@id='lastName']")
+	WebElement LastName;
+	@FindBy(xpath = "//input[@id='employeeId']")
+	WebElement Empid;
+	@FindBy(xpath = "//input[@id='btnSave']")
+	WebElement clicksave;
+	@FindBy(xpath = "//input[@id='personal_txtEmployeeId']")
+	WebElement CaptureEID;
+	public boolean addEmp(String fname,String mname,String lname)throws Throwable
+	{
+		clickPim.click();
+		Thread.sleep(2000);
+		clickAdd.click();
+		Thread.sleep(2000);
+		FirstName.sendKeys(fname);
+		MiddleName.sendKeys(mname);
+		LastName.sendKeys(lname);
+		String Exp_Data =Empid.getAttribute("value");
+		clicksave.click();
+		Thread.sleep(2000);
+		String Act_Data =CaptureEID.getAttribute("value");
+		if(Act_Data.equals(Exp_Data))
+		{
+			
+			Reporter.log(Exp_Data+"       "+Act_Data,true);
+			return true;
+		}
+		else
+		{
+			Reporter.log(Exp_Data+"       "+Act_Data,true);
+			return false;
+		}
+		
+		
+	}
+	
+}
+===========================================================================
+package applicationLayer;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class AdminLogout {
+@FindBy(xpath = "//a[@id='welcome']")
+WebElement clickWelcome;
+@FindBy(xpath = "//a[normalize-space()='Logout']")
+WebElement clickLogout;
+public void logout()throws Throwable
+{
+	clickWelcome.click();
+	Thread.sleep(2000);
+	clickLogout.click();
+}
+}
+============================================================================
+package config;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+
+import applicationLayer.AdminLogin;
+import applicationLayer.AdminLogout;
+
+public class Base {
+public static WebDriver driver;
+@BeforeTest
+public static void setUp()
+{
+	driver = new ChromeDriver();
+	driver.manage().window().maximize();
+	driver.get("http://orangehrm.qedgetech.com/");
+	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	AdminLogin verifyLogin=PageFactory.initElements(driver, AdminLogin.class);
+	verifyLogin.login("Admin", "Qedge123!@#");
+	
+}
+@AfterTest
+public static void tearDown() throws Throwable {
+	AdminLogout verifyLgout=PageFactory.initElements(driver, AdminLogout.class);
+	verifyLgout.logout();
+	driver.quit();
+}
+}
+====================================================================================
+package driverFactory;
+
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.Test;
+
+import applicationLayer.AddEmployee;
+import config.Base;
+import utilities.ExcelFileUtil;
+
+public class AppTest extends Base{
+String inputpath ="./FileInput/Employee.xlsx";
+String outputpath ="./FileOutput/DataDrivenResults.xlsx";
+@Test
+public void startTest() throws Throwable
+{
+	ExcelFileUtil xl = new ExcelFileUtil(inputpath);
+	int rc = xl.rowCount("EmpData");
+	for(int i=1;i<=rc;i++)
+	{
+		String firstname = xl.getCellData("EmpData", i, 0);
+		String middlename = xl.getCellData("EmpData", i, 1);
+		String lastname = xl.getCellData("EmpData", i, 2);
+		AddEmployee emp = PageFactory.initElements(driver, AddEmployee.class);
+		boolean res =emp.addEmp(firstname, middlename, lastname);
+		if(res)
+		{
+			xl.setCellData("EmpData", i, 3, "pass", outputpath);
+		}
+		else
+		{
+			
+			xl.setCellData("EmpData", i, 3, "fail", outputpath);
+		}
+	}
+	
+}
+}
+

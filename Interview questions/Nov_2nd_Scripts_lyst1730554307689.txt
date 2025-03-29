@@ -1,0 +1,121 @@
+Browser = firefox
+Url = http://webapp.qedgetech.com/
+search-panel = //span[@data-caption='Search']
+search-textbox = //input[@id='psearch']
+search-button = //button[@id='btnsubmit']
+======================================================
+//method for capture supplier number into notepad
+public static void captureSup(String LocatorType,String LocatorValue)throws Throwable
+{
+	String SupplierNum="";
+	if(LocatorType.equalsIgnoreCase("xpath"))
+	{
+		SupplierNum = driver.findElement(By.xpath(LocatorValue)).getAttribute("value");
+	}
+	if(LocatorType.equalsIgnoreCase("name"))
+	{
+		SupplierNum = driver.findElement(By.name(LocatorValue)).getAttribute("value");
+	}
+	if(LocatorType.equalsIgnoreCase("id"))
+	{
+		SupplierNum = driver.findElement(By.id(LocatorValue)).getAttribute("value");
+	}
+	//create notepad under CaptureData folder 
+	FileWriter fw = new FileWriter("./CaptureData/suppliernumber.txt");
+	BufferedWriter bw = new BufferedWriter(fw);
+	bw.write(SupplierNum);
+	bw.flush();
+	bw.close();
+	
+}
+//method for verifying supplier number
+public static void supplierTable()throws Throwable
+{
+	//read supplier number from above note pad
+	FileReader fr = new FileReader("./CaptureData/suppliernumber.txt");
+	BufferedReader br = new BufferedReader(fr);
+	String Exp_Data = br.readLine();
+	//click search panel if search textbox not displayed
+	if(!driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).isDisplayed())
+		//click search panel button if not displayed
+		driver.findElement(By.xpath(conpro.getProperty("search-panel"))).click();
+	driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).clear();
+	driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).sendKeys(Exp_Data);
+	driver.findElement(By.xpath(conpro.getProperty("search-button"))).click();
+	Thread.sleep(3000);
+	String Act_Data = driver.findElement(By.xpath("//table[@class='table ewTable']/tbody/tr[1]/td[6]/div/span/span")).getText();
+	Reporter.log(Exp_Data+"==========="+Act_Data,true);
+	try {
+		Assert.assertEquals(Act_Data, Exp_Data, "Supplier Number is Not Matching");
+	} catch (AssertionError e) {
+		System.out.println(e.getMessage());
+	}
+	
+}
+//method for capture customer number into notepad
+public static void captureCus(String LocatorType,String LocatorValue)throws Throwable
+{
+	String CustomerNum="";
+	if(LocatorType.equalsIgnoreCase("xpath"))
+	{
+		CustomerNum = driver.findElement(By.xpath(LocatorValue)).getAttribute("value");
+	}
+	if(LocatorType.equalsIgnoreCase("name"))
+	{
+		CustomerNum = driver.findElement(By.name(LocatorValue)).getAttribute("value");
+	}
+	if(LocatorType.equalsIgnoreCase("id"))
+	{
+		CustomerNum = driver.findElement(By.id(LocatorValue)).getAttribute("value");
+	}
+	//create notepad under CaptureData folder 
+	FileWriter fw = new FileWriter("./CaptureData/customernumber.txt");
+	BufferedWriter bw = new BufferedWriter(fw);
+	bw.write(CustomerNum);
+	bw.flush();
+	bw.close();
+	
+}
+//method for verifying supplier number
+public static void customerTable()throws Throwable
+{
+	//read supplier number from above note pad
+	FileReader fr = new FileReader("./CaptureData/customernumber.txt");
+	BufferedReader br = new BufferedReader(fr);
+	String Exp_Data = br.readLine();
+	//click search panel if search textbox not displayed
+	if(!driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).isDisplayed())
+		//click search panel button if not displayed
+		driver.findElement(By.xpath(conpro.getProperty("search-panel"))).click();
+	driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).clear();
+	driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).sendKeys(Exp_Data);
+	driver.findElement(By.xpath(conpro.getProperty("search-button"))).click();
+	Thread.sleep(3000);
+	String Act_Data = driver.findElement(By.xpath("//table[@class='table ewTable']/tbody/tr[1]/td[5]/div/span/span")).getText();
+	Reporter.log(Exp_Data+"==========="+Act_Data,true);
+	try {
+		Assert.assertEquals(Act_Data, Exp_Data, "Customer Number is Not Matching");
+	} catch (AssertionError e) {
+		System.out.println(e.getMessage());
+	}
+	
+}
+===================================================================================================================
+package testRunner;
+
+import org.junit.runner.RunWith;
+
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
+import cucumber.api.testng.AbstractTestNGCucumberTests;
+
+//@RunWith(Cucumber.class)
+@CucumberOptions(features = {"FeatureFiles"},monochrome = true,glue = {"stepDefination"},
+tags = ("@Customer"),
+plugin= {"pretty","html:target/report/cucumber",
+		"json:target/report/cucumber.json",
+		"junit:target/report/cucumber.xml",
+		})
+public class AppTest extends AbstractTestNGCucumberTests {
+
+}

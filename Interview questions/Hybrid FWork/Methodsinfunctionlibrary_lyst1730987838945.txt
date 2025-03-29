@@ -1,0 +1,70 @@
+//method for any listbox 
+public static void dropDownAction(String LocatorType,String LocatorValue,String TestData)
+{
+if(LocatorType.equalsIgnoreCase("xpath"))
+{
+	int value =Integer.parseInt(TestData);
+	Select element = new Select(driver.findElement(By.xpath(LocatorValue)));
+	element.selectByIndex(value);
+}
+if(LocatorType.equalsIgnoreCase("name"))
+{
+	int value =Integer.parseInt(TestData);
+	Select element = new Select(driver.findElement(By.name(LocatorValue)));
+	element.selectByIndex(value);
+}
+if(LocatorType.equalsIgnoreCase("id"))
+{
+	int value =Integer.parseInt(TestData);
+	Select element = new Select(driver.findElement(By.id(LocatorValue)));
+	element.selectByIndex(value);
+}
+}
+//method for capture stock number number into notepad
+public static void captureStock(String LocatorType,String LocatorValue)throws Throwable
+{
+	String StockNum="";
+	if(LocatorType.equalsIgnoreCase("xpath"))
+	{
+		StockNum = driver.findElement(By.xpath(LocatorValue)).getAttribute("value");
+	}
+	if(LocatorType.equalsIgnoreCase("name"))
+	{
+		StockNum = driver.findElement(By.name(LocatorValue)).getAttribute("value");
+	}
+	if(LocatorType.equalsIgnoreCase("id"))
+	{
+		StockNum = driver.findElement(By.id(LocatorValue)).getAttribute("value");
+	}
+	//create notepad under CaptureData folder 
+	FileWriter fw = new FileWriter("./CaptureData/stocknumber.txt");
+	BufferedWriter bw = new BufferedWriter(fw);
+	bw.write(StockNum);
+	bw.flush();
+	bw.close();
+	
+}
+//method for verifying stock number
+public static void stockTable()throws Throwable
+{
+	//read supplier number from above note pad
+	FileReader fr = new FileReader("./CaptureData/stocknumber.txt");
+	BufferedReader br = new BufferedReader(fr);
+	String Exp_Data = br.readLine();
+	//click search panel if search textbox not displayed
+	if(!driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).isDisplayed())
+		//click search panel button if not displayed
+		driver.findElement(By.xpath(conpro.getProperty("search-panel"))).click();
+	driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).clear();
+	driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).sendKeys(Exp_Data);
+	driver.findElement(By.xpath(conpro.getProperty("search-button"))).click();
+	Thread.sleep(3000);
+	String Act_Data = driver.findElement(By.xpath("//table[@class='table ewTable']/tbody/tr[1]/td[8]/div/span/span")).getText();
+	Reporter.log(Exp_Data+"==========="+Act_Data,true);
+	try {
+		Assert.assertEquals(Act_Data, Exp_Data, "Stock Number is Not Matching");
+	} catch (AssertionError e) {
+		System.out.println(e.getMessage());
+	}
+	
+}
